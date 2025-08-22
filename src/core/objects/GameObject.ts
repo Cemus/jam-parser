@@ -74,7 +74,7 @@ export class SmallKey extends Key {
   }
 }
 
-export abstract class ColoredKey extends Key {
+export class ColoredKey extends Key {
   private color: string;
 
   constructor(color: string) {
