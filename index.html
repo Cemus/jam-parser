@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/main.ts" defer></script>
+
+    <title>Parser</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="background">
+        <nav>
+          <ul>
+            <li class="menu" id="mainMenu">Ecran principal</li>
+            <li class="menu" id="statusMenu">Statut</li>
+            <li class="menu" id="documentsMenu">Documents</li>
+          </ul>
+        </nav>
+      </header>
+      <main class="background"><p>test</p></main>
+      <footer>
+        <div class="avatar-container background">
+          <img id="avatar" src="" alt="avatar" />
+          <p id="name">Name</p>
+        </div>
+        <div>
+          <div class="dialog-container background">
+            <ul id="dialogBox"></ul>
+          </div>
+          <div class="parser-container">
+            <input type="text" id="parser" />
+            <button disabled type="button" id="parse">Entrer</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

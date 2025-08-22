@@ -1,0 +1,123 @@
+@import url(style/header.css);
+@import url(style/main.css);
+@import url(style/footer.css);
+
+:root {
+  --b0: 23, 32, 56;
+  --b1: 37, 58, 94;
+  --b2: 60, 94, 139;
+  --b3: 79, 143, 186;
+  --b4: 115, 190, 211;
+  --b5: 164, 221, 219;
+
+  --g0: 25, 51, 45;
+  --g1: 37, 86, 46;
+  --g2: 70, 130, 50;
+  --g3: 117, 167, 67;
+  --g4: 168, 202, 88;
+  --g5: 208, 218, 145;
+
+  --s0: 77, 43, 50;
+  --s1: 122, 72, 65;
+  --s2: 173, 119, 87;
+  --s3: 192, 148, 115;
+  --s4: 215, 181, 148;
+  --s5: 231, 213, 179;
+
+  --y0: 52, 28, 39;
+  --y1: 96, 44, 44;
+  --y2: 136, 75, 43;
+  --y3: 190, 119, 43;
+  --y4: 222, 158, 65;
+  --y5: 232, 193, 112;
+
+  --r0: 36, 21, 39;
+  --r1: 65, 29, 49;
+  --r2: 117, 36, 56;
+  --r3: 165, 48, 48;
+  --r4: 207, 87, 60;
+  --r5: 218, 134, 62;
+
+  --p0: 30, 29, 57;
+  --p1: 64, 39, 81;
+  --p2: 122, 54, 123;
+  --p3: 162, 62, 140;
+  --p4: 198, 81, 151;
+  --p5: 223, 132, 165;
+
+  --d0: 9, 10, 20;
+  --d1: 16, 20, 31;
+  --d2: 21, 29, 40;
+  --d3: 32, 46, 55;
+  --d4: 57, 74, 80;
+  --d5: 87, 114, 119;
+
+  --w0: 129, 151, 150;
+  --w1: 168, 181, 178;
+  --w2: 199, 207, 204;
+  --w3: 235, 237, 233;
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: rgb(var(--w3));
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(136deg, rgb(var(--g0)) 15%, rgb(var(--d0)) 100%);
+  z-index: -1;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.background {
+  background-color: rgba(var(--d0), 0.5);
+  border-radius: 0.25rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 800px) {
+  .avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.25rem;
+  }
+
+  .parser-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  footer > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .cell {
+    height: 4rem;
+    width: 4rem;
+  }
+}

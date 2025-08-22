@@ -1,0 +1,40 @@
+header {
+  margin: 0.5rem;
+  padding: 1rem;
+  box-shadow: 2px 2px 8px rgb(var(--d0));
+}
+
+header > nav > ul {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu,
+.menu-highlighted {
+  cursor: pointer;
+  min-width: 12rem;
+  text-align: center;
+  transition: all 250ms ease-in-out;
+  user-select: none;
+}
+
+.menu:hover {
+  letter-spacing: 0.125rem;
+  color: rgb(var(--g5));
+}
+
+.menu-highlighted {
+  letter-spacing: 0.125rem;
+  color: rgb(var(--g5));
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+@media (max-width: 800px) {
+  .menu,
+  .menu-highlighted {
+    min-width: auto;
+  }
+}

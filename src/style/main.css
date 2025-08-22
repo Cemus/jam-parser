@@ -1,0 +1,63 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex: 1;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  box-shadow: 2px 2px 8px rgb(var(--d0));
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell {
+  height: 7rem;
+  width: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: solid 1px rgb(var(--d0));
+
+  box-shadow: 8px 8px 8px rgb(var(--d0));
+}
+
+.cell.door {
+  background-color: rgb(var(--g5));
+}
+.cell.object {
+  background-color: rgb(var(--y5));
+}
+.cell.empty {
+  cursor: auto;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.cell.character {
+  background-color: rgb(var(--w3));
+  color: rgb(var(--g0));
+}
+.cell.floor {
+  background-color: rgb(var(--w3));
+}
+.cell.wall {
+  background-color: rgb(var(--d0));
+}
+
+.cell-highlight {
+  border: solid 1px rgb(var(--g3));
+  box-shadow: inset 0 0 0 3px rgba(var(--b4), 0.9);
+}
+
+@media (max-width: 800px) {
+  .cell {
+    height: 4rem;
+    width: 4rem;
+  }
+}
