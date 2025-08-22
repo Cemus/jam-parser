@@ -1,3 +1,5 @@
+import type { KeyColor } from "./KeyColor";
+
 export default abstract class GameObject {
   name: string;
   isContainer: boolean;
@@ -75,9 +77,9 @@ export class SmallKey extends Key {
 }
 
 export class ColoredKey extends Key {
-  private color: string;
+  private color: KeyColor;
 
-  constructor(color: string) {
+  constructor(color: KeyColor) {
     super(`Clef ${color}`);
     this.color = color;
   }
