@@ -72,7 +72,7 @@ export class SmallKey extends Key {
   }
 
   examine(): string {
-    return "Cette petite clef nous servir à ouvrir de petits objets comme des tiroirs.";
+    return "Cette petite clef pourrait nous servir à ouvrir de petits objets comme des tiroirs.";
   }
 }
 
