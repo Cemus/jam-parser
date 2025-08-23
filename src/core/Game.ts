@@ -9,6 +9,8 @@ import Parser from "./ui/Parser";
 import Map from "./ui/map/Map";
 import { ActionType } from "./characters/ActionType";
 import MoveCommand from "./commands/MoveCommand";
+import ObserveCommand from "./commands/ObserveCommand";
+import TakeCommand from "./commands/TakeCommand";
 
 export default class Game {
   private _characters: Character[];
@@ -19,6 +21,8 @@ export default class Game {
     new SummonCommand(),
     new OpenDoorCommand(),
     new MoveCommand(),
+    new ObserveCommand(),
+    new TakeCommand(),
   ];
   private _map: Map;
 
@@ -33,14 +37,14 @@ export default class Game {
         y: 3,
       }),
     ];
-    this._map = new Map(rooms[0], this.characters);
+    this._map = new Map(rooms[0], this.characters, this.currentCharacter);
     this._currentCharacter = this.characters[0];
   }
 
   init() {
     this.parser.init();
     this.display.init().updateCurrentCharacter(this.currentCharacter);
-    this.map.renderRoom(this.currentCharacter);
+    this.map.updateCurrentCharacter(this.currentCharacter).renderRoom();
   }
 
   handleInput(input: string) {
@@ -58,6 +62,7 @@ export default class Game {
         this.currentCharacter
       );
   }
+
   public get characters(): Character[] {
     return this._characters;
   }
@@ -71,7 +76,7 @@ export default class Game {
   public set currentCharacter(value: Character) {
     this._currentCharacter = value;
     this.display.updateCurrentCharacter(this.currentCharacter);
-    this.map.renderRoom(this.currentCharacter);
+    this.map.updateCurrentCharacter(this.currentCharacter).renderRoom();
   }
 
   public get parser(): Parser {

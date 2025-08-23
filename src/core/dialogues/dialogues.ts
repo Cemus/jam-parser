@@ -23,7 +23,10 @@ export const dialogues: Record<string, Record<ActionType, string[]>> = {
       "Je vais jeter un œil...",
       "Inspectons les environs...",
     ],
+    [ActionType.OBSERVE_FAIL]: ["Rien de particulier.", "Rien à signaler."],
+
     [ActionType.EXAMINE]: ["Je suis arrivée."],
+    [ActionType.FIND_ITEM]: ["J'ai trouvé quelque chose."],
 
     [ActionType.UNKNOWN]: ["Je ne comprends pas.", "Je te reçois mal."],
   },
@@ -46,7 +49,9 @@ export const dialogues: Record<string, Record<ActionType, string[]>> = {
       "Voyons ce que les énergies me chuchotent...",
       "Puissent les esprits me guider...",
     ],
+    [ActionType.OBSERVE_FAIL]: ["Je ne perçois rien.", "Rien de tangible."],
     [ActionType.EXAMINE]: ["Je suis arrivée."],
+    [ActionType.FIND_ITEM]: ["Quelque chose était caché !"],
 
     [ActionType.UNKNOWN]: ["Je ne saisis pas.", "Je n'ai pas bien compris."],
   },
@@ -64,7 +69,13 @@ export const dialogues: Record<string, Record<ActionType, string[]>> = {
     [ActionType.ARRIVED]: ["J'y suis."],
 
     [ActionType.OBSERVE]: ["Voyons, voyons...", "Que se cache-t-il autour..."],
+    [ActionType.OBSERVE_FAIL]: [
+      "Je ne vois rien d'intéressant.",
+      "Il n'y a rien.",
+    ],
+
     [ActionType.EXAMINE]: ["Je suis arrivée."],
+    [ActionType.FIND_ITEM]: ["Tiens donc !"],
 
     [ActionType.UNKNOWN]: ["Comment ?", "Plaît-il ?"],
   },

@@ -1,6 +1,7 @@
 import { ActionType } from "../../characters/ActionType";
 import type Character from "../../characters/Character";
 import type Game from "../../Game";
+import type { GameObject } from "../../objects/GameObject";
 import AStar, { type Point } from "./aStar";
 import type { Room } from "./Room";
 
@@ -11,14 +12,20 @@ export default class Map {
   )[0] as HTMLElement;
   private _aStar: AStar;
   private _characters: Character[];
+  private _currentCharacter: Character;
 
-  constructor(room: Room, characters: Character[]) {
+  constructor(
+    room: Room,
+    characters: Character[],
+    currentCharacter: Character
+  ) {
     this._room = room;
     this._characters = characters;
     this._aStar = new AStar(this.room);
+    this._currentCharacter = currentCharacter;
   }
 
-  renderRoom(currentCharacter: Character) {
+  renderRoom() {
     this._container.innerHTML = "";
 
     this.room.forEach((row, y) => {
@@ -54,7 +61,7 @@ export default class Map {
         }
 
         if (c.type !== "empty") {
-          this.highlightCell(cellEl, { x: x, y: y }, currentCharacter);
+          this.highlightCell(cellEl, { x: x, y: y }, this.currentCharacter);
         }
 
         rowEl.appendChild(cellEl);
@@ -62,6 +69,11 @@ export default class Map {
 
       this._container.appendChild(rowEl);
     });
+  }
+
+  updateCurrentCharacter(character: Character): this {
+    this.currentCharacter = character;
+    return this;
   }
 
   highlightCell(
@@ -86,6 +98,76 @@ export default class Map {
     return false;
   }
 
+  haveSamePosition(p1: Point, p2: Point): boolean {
+    if (p1.x === p2.x && p1.y === p2.y) {
+      return true;
+    }
+    return false;
+  }
+
+  observeSurroundings(character: Character): string[] {
+    const observations: string[] = [];
+
+    this.room.forEach((row, y) => {
+      row.forEach((cell, x) => {
+        if (
+          this.areAdjacent(character.position, { x, y }) ||
+          this.haveSamePosition(character.position, { x, y })
+        ) {
+          if (cell.hidden) {
+            this.revealCell({ x, y });
+            this.renderRoom();
+            character.reactTo(ActionType.FIND_ITEM);
+          }
+          if (cell.object) {
+            observations.push(cell.object.observe());
+          }
+        }
+      });
+    });
+
+    return observations;
+  }
+
+  getObjectsAround(
+    character: Character
+  ): { object: GameObject; position: Point }[] {
+    const found: { object: GameObject; position: Point }[] = [];
+
+    this.room.forEach((row, y) => {
+      row.forEach((cell, x) => {
+        if (
+          this.areAdjacent(character.position, { x, y }) ||
+          this.haveSamePosition(character.position, { x, y })
+        ) {
+          console.log(cell.object);
+          if (cell.object && !cell.hidden) {
+            found.push({ object: cell.object, position: { x, y } });
+          }
+        }
+      });
+    });
+
+    return found;
+  }
+
+  removeObject(cellPosition: Point) {
+    const { x, y } = cellPosition;
+    const cell = this.room[y]?.[x];
+    if (cell) {
+      cell.object = null;
+      cell.type = "floor";
+    }
+    this.renderRoom();
+  }
+
+  revealCell(cellPosition: Point): void {
+    const { x, y } = cellPosition;
+    const cell = this.room[y]?.[x];
+    if (cell) {
+      cell.hidden = false;
+    }
+  }
   canMoveCharacter(character: Character, goal: Point): boolean {
     const path = this.aStar.findPath(character.position, goal);
     return path.length > 0;
@@ -102,7 +184,7 @@ export default class Map {
 
     for (const p of path) {
       character.position = p;
-      this.renderRoom(character);
+      this.renderRoom();
       await this.sleep(500);
     }
 
@@ -148,5 +230,12 @@ export default class Map {
   }
   public set characters(value: Character[]) {
     this._characters = value;
+  }
+
+  public get currentCharacter(): Character {
+    return this._currentCharacter;
+  }
+  public set currentCharacter(value: Character) {
+    this._currentCharacter = value;
   }
 }

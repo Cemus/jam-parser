@@ -1,4 +1,5 @@
 import { dialogues } from "../dialogues/dialogues";
+import type { GameObject } from "../objects/GameObject";
 import type { Point } from "../ui/map/aStar";
 import type { ActionType } from "./ActionType";
 import type Stats from "./Stats";
@@ -8,6 +9,7 @@ export default class Character {
   private _stats: Stats;
   private _avatar: string;
   private _position: Point;
+  private _inventory: GameObject[] = [];
 
   constructor(name: string, stats: Stats, avatar: string, position: Point) {
     this._name = name;
@@ -47,5 +49,12 @@ export default class Character {
   }
   public set position(value: Point) {
     this._position = value;
+  }
+
+  public get inventory(): GameObject[] {
+    return this._inventory;
+  }
+  public set inventory(value: GameObject[]) {
+    this._inventory = value;
   }
 }

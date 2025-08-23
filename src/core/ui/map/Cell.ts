@@ -1,4 +1,4 @@
-import type GameObject from "../../objects/GameObject";
+import type { GameObject } from "../../objects/GameObject";
 import type { CellType } from "./CellType";
 
 export interface Cell {
@@ -9,5 +9,5 @@ export interface Cell {
   hidden?: boolean;
   walkable: boolean;
 
-  object?: GameObject;
+  object?: GameObject | null;
 }

@@ -38,9 +38,11 @@ export default class MoveCommand implements Command {
   private isMovementCommand(input: string): boolean {
     const keywords = [
       "avance",
+      "haut",
       "nord",
       "recule",
       "sud",
+      "bas",
       "droite",
       "l'est",
       "gauche",

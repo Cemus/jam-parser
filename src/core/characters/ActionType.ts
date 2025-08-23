@@ -6,6 +6,8 @@ export const ActionType = {
   ARRIVED: "ARRIVED",
   CANT_MOVE: "CANT_MOVE",
   OBSERVE: "OBSERVE",
+  OBSERVE_FAIL: "OBSERVE_FAIL",
+  FIND_ITEM: "FIND_ITEM",
   EXAMINE: "EXAMINE",
   UNKNOWN: "UNKNOWN",
 } as const;
