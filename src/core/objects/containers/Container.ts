@@ -5,13 +5,13 @@ import type { LockType } from "../LockType";
 export abstract class Container extends GameObject implements Lockable {
   protected _isContainer: boolean;
   protected _children: GameObject[];
-  locked: LockType | null;
+  locked?: LockType;
 
   constructor(name: string, children?: GameObject[], locked?: LockType) {
     super(name);
     this._isContainer = true;
     this._children = children ?? [];
-    this.locked = locked ?? null;
+    this.locked = locked;
   }
 
   addChild(obj: GameObject): GameObject {

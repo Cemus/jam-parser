@@ -3,11 +3,12 @@ import type { Lockable } from "../Lockable";
 import type { LockType } from "../LockType";
 
 export class Door extends GameObject implements Lockable {
-  locked: LockType | null;
+  locked?: LockType;
 
   constructor(name: string, locked?: LockType) {
     super(name);
-    this.locked = locked ?? null;
+    this.locked = locked;
+    this.determiner = "cette";
   }
 
   observe(): string {

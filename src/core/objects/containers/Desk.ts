@@ -4,7 +4,8 @@ import { Container } from "./Container";
 
 export class Desk extends Container {
   constructor(children?: GameObject[], locked?: LockType) {
-    super("bureau", children ?? [], locked ?? null);
+    super("bureau", children ?? [], locked);
+    this.determiner = "ce";
   }
 
   observe(): string {
