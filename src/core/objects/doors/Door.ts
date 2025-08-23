@@ -3,11 +3,11 @@ import type { Lockable } from "../Lockable";
 import type { LockType } from "../LockType";
 
 export class Door extends GameObject implements Lockable {
-  private _locked: LockType | null;
+  locked: LockType | null;
 
   constructor(name: string, locked?: LockType) {
     super(name);
-    this._locked = locked ?? null;
+    this.locked = locked ?? null;
   }
 
   observe(): string {
@@ -15,14 +15,14 @@ export class Door extends GameObject implements Lockable {
   }
 
   examine(): string {
-    if (this._locked) {
-      return `Une vieille porte, sa serrure est de couleur ${this._locked}.`;
+    if (this.locked) {
+      return `Une vieille porte, sa serrure est de couleur ${this.locked}.`;
     }
     return `Une vieille porte, je pourrais essayer de l'ouvrir.`;
   }
 
   open(): string | void {
-    if (!this._locked) {
+    if (!this.locked) {
       //GOTO
     } else {
       return `Elle est verrouillée.`;
@@ -30,7 +30,7 @@ export class Door extends GameObject implements Lockable {
   }
 
   unlock(): string {
-    if (this._locked) {
+    if (this.locked) {
       return `${this.name} a été déverrouillé(e).`;
     } else {
       return `${this.name} est déjà ouvert(e).`;

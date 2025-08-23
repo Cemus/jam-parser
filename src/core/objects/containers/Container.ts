@@ -3,8 +3,8 @@ import type { Lockable } from "../Lockable";
 import type { LockType } from "../LockType";
 
 export abstract class Container extends GameObject implements Lockable {
-  _isContainer: boolean;
-  _children: GameObject[];
+  protected _isContainer: boolean;
+  protected _children: GameObject[];
   locked: LockType | null;
 
   constructor(name: string, children?: GameObject[], locked?: LockType) {
