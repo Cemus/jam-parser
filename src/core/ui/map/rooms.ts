@@ -1,10 +1,8 @@
-import {
-  ColoredKey,
-  Desk,
-  Door,
-  Drawer,
-  SmallKey,
-} from "../../objects/GameObject";
+import { Desk } from "../../objects/containers/Desk";
+import { Drawer } from "../../objects/containers/Drawer";
+import { Door } from "../../objects/doors/Door";
+import { ColoredKey } from "../../objects/items/keys/ColoredKey";
+import { SmallKey } from "../../objects/items/keys/SmallKey";
 import type { Room } from "./Room";
 
 export const rooms: Room[] = [

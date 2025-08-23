@@ -1,3 +1,3 @@
-import type { KeyColor } from "./KeyColor";
+import type { KeyColor } from "./items/keys/KeyColor";
 
 export type LockType = KeyColor | null;

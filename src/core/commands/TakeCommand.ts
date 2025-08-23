@@ -1,5 +1,5 @@
 import type Game from "../Game";
-import type { Item } from "../objects/GameObject";
+import type { Item } from "../objects/items/Item";
 import type Command from "./Command";
 
 export default class TakeCommand implements Command {
