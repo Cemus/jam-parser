@@ -5,13 +5,13 @@ import type { LockType } from "../LockType";
 export abstract class Container extends GameObject implements Lockable {
   protected _isContainer: boolean;
   protected _children: GameObject[];
-  locked?: LockType;
+  lock: LockType | null;
 
-  constructor(name: string, children?: GameObject[], locked?: LockType) {
+  constructor(name: string, children?: GameObject[], lock?: LockType | null) {
     super(name);
     this._isContainer = true;
     this._children = children ?? [];
-    this.locked = locked;
+    this.lock = lock ?? null;
   }
 
   addChild(obj: GameObject): GameObject {
@@ -27,7 +27,7 @@ export abstract class Container extends GameObject implements Lockable {
     if (!this._isContainer) {
       return `Cet objet ne peut pas être ouvert.`;
     }
-    if (this.locked) return `C'est verrouillé.`;
+    if (this.lock) return `C'est verrouillé.`;
     if (this._children.length === 0) return `C'est vide.`;
     return `À l'intérieur, il y a : ${this._children
       .map((c) => c.name)
@@ -35,7 +35,7 @@ export abstract class Container extends GameObject implements Lockable {
   }
 
   unlock(): string {
-    if (this.locked) {
+    if (this.lock) {
       return `${this.name} a été déverrouillé(e).`;
     } else {
       return `${this.name} est déjà ouvert(e).`;
