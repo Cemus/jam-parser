@@ -14,7 +14,6 @@ export const rooms: Room[] = [
       {
         name: "Porte D",
         type: "door",
-        isOpen: false,
         walkable: false,
         object: new Door("Porte D", "magenta"),
       },
@@ -43,7 +42,6 @@ export const rooms: Room[] = [
       {
         name: "Porte B",
         type: "door",
-        isOpen: false,
         walkable: false,
         object: new Door("Porte A", "rouge"),
       },
@@ -53,9 +51,8 @@ export const rooms: Room[] = [
       {
         name: "Porte C",
         type: "door",
-        isOpen: true,
         walkable: false,
-        object: new Door("Porte C", null),
+        object: new Door("Porte C"),
       },
     ],
     [
@@ -71,7 +68,6 @@ export const rooms: Room[] = [
       {
         name: "Porte a",
         type: "door",
-        isOpen: false,
         walkable: false,
         object: new Door("Porte A", "bleue"),
       },
@@ -89,14 +85,13 @@ export const rooms: Room[] = [
       { name: "Vide", type: "empty", walkable: false },
     ],
     [
-      { name: "Porte B", type: "door", isOpen: false, walkable: false },
+      { name: "Porte B", type: "door", walkable: false },
       { name: "Sol", type: "floor", walkable: true },
       { name: "Sol", type: "floor", walkable: true },
       { name: "Sol", type: "floor", walkable: true },
       {
         name: "Porte B",
         type: "door",
-        isOpen: false,
         walkable: false,
         object: new Door("Porte B", "verte"),
       },
