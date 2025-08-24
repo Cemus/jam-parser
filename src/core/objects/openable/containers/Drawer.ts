@@ -5,7 +5,7 @@ import { Container } from "./Container";
 export class Drawer extends Container {
   constructor(children?: GameObject[], lock?: LockType) {
     super("tiroir", children ?? [], lock);
-    this.determiner = "le";
+    this.genre = "masculine";
   }
 
   observe(): string {

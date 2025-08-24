@@ -4,7 +4,7 @@ import Openable from "../Openable";
 export class Door extends Openable {
   constructor(name: string, lock?: LockType) {
     super(name, lock);
-    this.determiner = "la";
+    this.genre = "feminine";
   }
 
   observe(): string {

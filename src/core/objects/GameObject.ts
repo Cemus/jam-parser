@@ -1,11 +1,15 @@
 export abstract class GameObject {
   private _name: string;
-  private _determiner?: string;
+  private _genre?: "masculine" | "feminine";
   private _hidden: boolean;
 
-  constructor(name: string, hidden?: boolean, determiner?: string) {
+  constructor(
+    name: string,
+    hidden?: boolean,
+    genre?: "masculine" | "feminine"
+  ) {
     this._name = name;
-    this._determiner = determiner;
+    this._genre = genre;
     this._hidden = hidden ?? false;
   }
 
@@ -19,11 +23,11 @@ export abstract class GameObject {
     this._name = value;
   }
 
-  public get determiner(): string | undefined {
-    return this._determiner;
+  public get genre(): "masculine" | "feminine" | undefined {
+    return this._genre;
   }
-  public set determiner(value: string | undefined) {
-    this._determiner = value;
+  public set genre(value: "masculine" | "feminine" | undefined) {
+    this._genre = value;
   }
 
   public get hidden(): boolean {

@@ -44,16 +44,17 @@ export default class OpenCommand implements Command {
 
     if (chosen.object instanceof Openable) {
       const objectToOpen = chosen.object;
-
       if (objectToOpen.isLocked()) {
         game.display.log(`C'est verrouillé.`, character);
         return;
       }
 
       if (objectToOpen instanceof Container) {
-        objectToOpen.displayContent();
+        game.display.log(`${objectToOpen.displayContent()}`, character);
+        return;
       } else if (objectToOpen instanceof Door) {
         game.changeRoom();
+        return;
       }
     }
   }

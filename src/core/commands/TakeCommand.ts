@@ -47,7 +47,9 @@ export default class TakeCommand implements Command {
 
       game.map.removeObject(chosen.position);
       game.display.log(
-        `${character.name} a pris ${chosen.object.determiner} ${chosen.object.name}.`
+        `${character.name} a pris ${
+          chosen.object.genre === "masculine" ? "le" : "la"
+        } ${chosen.object.name}.`
       );
     } else {
       game.display.log(`Je ne peux pas prendre ça.`, character);

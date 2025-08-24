@@ -23,7 +23,11 @@ export abstract class Container extends Openable {
 
   displayContent(): string {
     if (this._children.length === 0) return `C'est vide.`;
-    return `${this._children.map((c) => c.name).join(", ")}.`;
+    return `À l'intérieur ${this.genre === "masculine" ? "du" : "de la"} ${
+      this.name
+    }, il y a : ${this._children
+      .map((c) => `${c.genre === "masculine" ? "un" : "une"} ${c.name}`)
+      .join(", ")}.`;
   }
 
   unlock(): string {
