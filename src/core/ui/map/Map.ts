@@ -207,7 +207,7 @@ export default class Map {
     }
   }
   canMoveCharacter(character: Character, goal: Point): boolean {
-    const path = this.aStar.findPath(character.position, goal);
+    const path = this.aStar.findPath(character.position, goal, this.characters);
     return path.length > 0;
   }
 
@@ -218,7 +218,11 @@ export default class Map {
   ): Promise<void> {
     if (!this.canMoveCharacter(character, goal)) return;
 
-    const path = this.aStar.findPathToTarget(character.position, goal);
+    const path = this.aStar.findPathToTarget(
+      character.position,
+      goal,
+      this.characters
+    );
 
     for (const p of path) {
       character.position = p;

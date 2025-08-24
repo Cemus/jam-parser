@@ -1,3 +1,4 @@
+import type Character from "../../characters/Character";
 import type { Cell } from "./Cell";
 
 export type Point = { x: number; y: number };
@@ -20,13 +21,29 @@ export default class AStar {
     return true;
   }
 
-  findPathToTarget(start: Point, target: Point): Point[] {
+  private isWalkable(x: number, y: number, characters: Character[]): boolean {
+    if (!this.inBounds(x, y)) return false;
+
+    const cell = this.grid[y][x];
+
+    if (!cell.walkable) return false;
+
+    if (characters.some((c) => c.position.x === x && c.position.y === y)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  findPathToTarget(
+    start: Point,
+    target: Point,
+    characters: Character[]
+  ): Point[] {
     if (!this.inBounds(target.x, target.y)) return [];
 
-    const cell = this.grid[target.y][target.x];
-
-    if (cell.walkable) {
-      return this.findPath(start, target);
+    if (this.isWalkable(target.x, target.y, characters)) {
+      return this.findPath(start, target, characters);
     }
 
     const candidates: Point[] = [
@@ -34,7 +51,9 @@ export default class AStar {
       { x: target.x - 1, y: target.y },
       { x: target.x, y: target.y + 1 },
       { x: target.x, y: target.y - 1 },
-    ].filter((n) => this.inBounds(n.x, n.y) && this.grid[n.y][n.x].walkable);
+    ].filter(
+      (n) => this.inBounds(n.x, n.y) && this.isWalkable(n.x, n.y, characters)
+    );
 
     if (candidates.length === 0) return [];
 
@@ -42,7 +61,7 @@ export default class AStar {
     let bestLen = Infinity;
 
     for (const candidate of candidates) {
-      const path = this.findPath(start, candidate);
+      const path = this.findPath(start, candidate, characters);
       if (path.length > 0 && path.length < bestLen) {
         bestPath = path;
         bestLen = path.length;
@@ -52,7 +71,7 @@ export default class AStar {
     return bestPath;
   }
 
-  findPath(start: Point, goal: Point): Point[] {
+  findPath(start: Point, goal: Point, characters: Character[]): Point[] {
     const openSet: Point[] = [start];
     const cameFrom: Map<string, Point> = new Map();
 
@@ -91,7 +110,11 @@ export default class AStar {
         { x: current.x - 1, y: current.y },
         { x: current.x, y: current.y + 1 },
         { x: current.x, y: current.y - 1 },
-      ].filter((n) => this.inBounds(n.x, n.y));
+      ].filter(
+        (n) =>
+          this.isWalkable(n.x, n.y, characters) ||
+          (n.x === goal.x && n.y === goal.y)
+      );
 
       for (const neighbor of neighbors) {
         const tentativeG = (gScore.get(key(current)) ?? Infinity) + 1;
