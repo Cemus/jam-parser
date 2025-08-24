@@ -1,8 +1,8 @@
 import { Key } from "./Key";
 
 export class SmallKey extends Key {
-  constructor() {
-    super("petite clef");
+  constructor(hidden?: boolean) {
+    super("petite clef", hidden);
   }
 
   examine(): string {

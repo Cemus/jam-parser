@@ -1,16 +1,12 @@
 import { Item } from "../Item";
 
 export abstract class Key extends Item {
-  constructor(name: string) {
-    super(name);
-    this.determiner = "cette";
+  constructor(name: string, hidden?: boolean) {
+    super(name, hidden);
+    this.determiner = "la";
   }
 
   observe(): string {
     return `une ${this.name.toLowerCase()}`;
   }
-
-  use() {}
-
-  grab() {}
 }

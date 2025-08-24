@@ -1,7 +1,6 @@
 import Character from "./characters/Character";
 import Stats from "./characters/Stats";
 import type Command from "./commands/Command";
-import OpenDoorCommand from "./commands/OpenDoorCommand";
 import SummonCommand from "./commands/SummonCommand";
 import Display from "./ui/Display";
 import { rooms } from "./ui/map/rooms";
@@ -11,6 +10,7 @@ import { ActionType } from "./characters/ActionType";
 import MoveCommand from "./commands/MoveCommand";
 import ObserveCommand from "./commands/ObserveCommand";
 import TakeCommand from "./commands/TakeCommand";
+import OpenCommand from "./commands/OpenCommand";
 
 export default class Game {
   private _characters: Character[];
@@ -19,7 +19,7 @@ export default class Game {
   private _display: Display = new Display();
   private _commands: Command[] = [
     new SummonCommand(),
-    new OpenDoorCommand(),
+    new OpenCommand(),
     new MoveCommand(),
     new ObserveCommand(),
     new TakeCommand(),
@@ -61,6 +61,11 @@ export default class Game {
         this.currentCharacter.reactTo(ActionType.UNKNOWN),
         this.currentCharacter
       );
+  }
+
+  changeRoom(): void {
+    console.log("ROOM CHANGED");
+    //TODO
   }
 
   public get characters(): Character[] {

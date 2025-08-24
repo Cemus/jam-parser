@@ -4,8 +4,8 @@ import { Key } from "./Key";
 export class ColoredKey extends Key {
   private color: KeyColor;
 
-  constructor(color: KeyColor) {
-    super(`clef ${color}`);
+  constructor(color: KeyColor, hidden?: boolean) {
+    super(`clef ${color}`, hidden);
     this.color = color;
   }
 

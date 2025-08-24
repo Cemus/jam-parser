@@ -1,6 +1,7 @@
 import { GameObject } from "../GameObject";
 
 export abstract class Item extends GameObject {
-  abstract use(): void;
-  abstract grab(): void;
+  constructor(name: string, hidden?: boolean) {
+    super(name, hidden);
+  }
 }

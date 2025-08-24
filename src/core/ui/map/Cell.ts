@@ -5,7 +5,6 @@ export interface Cell {
   name: string;
   type: CellType;
   hasItem?: string;
-  hidden?: boolean;
   walkable: boolean;
 
   object?: GameObject | null;

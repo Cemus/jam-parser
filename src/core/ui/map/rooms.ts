@@ -1,6 +1,6 @@
-import { Desk } from "../../objects/containers/Desk";
-import { Drawer } from "../../objects/containers/Drawer";
-import { Door } from "../../objects/doors/Door";
+import { Desk } from "../../objects/openable/containers/Desk";
+import { Drawer } from "../../objects/openable/containers/Drawer";
+import { Door } from "../../objects/openable/doors/Door";
 import { ColoredKey } from "../../objects/items/keys/ColoredKey";
 import { SmallKey } from "../../objects/items/keys/SmallKey";
 import type { Room } from "./Room";
@@ -26,9 +26,8 @@ export const rooms: Room[] = [
       {
         name: "Clé",
         type: "object",
-        hidden: true,
         walkable: true,
-        object: new SmallKey(),
+        object: new SmallKey(true),
       },
       {
         name: "Bureau",

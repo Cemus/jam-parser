@@ -2,6 +2,7 @@ import { ActionType } from "../../characters/ActionType";
 import type Character from "../../characters/Character";
 import type Game from "../../Game";
 import type { GameObject } from "../../objects/GameObject";
+import { Container } from "../../objects/openable/containers/Container";
 import AStar, { type Point } from "./aStar";
 import type { Room } from "./Room";
 
@@ -45,7 +46,9 @@ export default class Map {
           cellEl.textContent = character.name;
           cellEl.title = character.name;
         } else {
-          if (c.hidden) {
+          console.log(c.object);
+          if (c.object?.hidden) {
+            console.log(c.object?.hidden);
             cellEl.className = "cell floor";
             cellEl.dataset.name = "floor";
             cellEl.title = "Sol";
@@ -114,7 +117,7 @@ export default class Map {
           this.areAdjacent(character.position, { x, y }) ||
           this.haveSamePosition(character.position, { x, y })
         ) {
-          if (cell.hidden) {
+          if (cell.object?.hidden) {
             this.revealCell({ x, y });
             this.renderRoom();
             character.reactTo(ActionType.FIND_ITEM);
@@ -140,9 +143,13 @@ export default class Map {
           this.areAdjacent(character.position, { x, y }) ||
           this.haveSamePosition(character.position, { x, y })
         ) {
-          console.log(cell.object);
-          if (cell.object && !cell.hidden) {
+          if (cell.object && !cell.object.hidden) {
             found.push({ object: cell.object, position: { x, y } });
+            if (cell.object instanceof Container) {
+              cell.object.children.forEach((child) => {
+                found.push({ object: child, position: { x, y } });
+              });
+            }
           }
         }
       });
@@ -164,8 +171,8 @@ export default class Map {
   revealCell(cellPosition: Point): void {
     const { x, y } = cellPosition;
     const cell = this.room[y]?.[x];
-    if (cell) {
-      cell.hidden = false;
+    if (cell && cell.object) {
+      cell.object.hidden = false;
     }
   }
   canMoveCharacter(character: Character, goal: Point): boolean {

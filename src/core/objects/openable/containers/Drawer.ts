@@ -1,10 +1,10 @@
-import type { GameObject } from "../GameObject";
-import type { LockType } from "../LockType";
+import type { GameObject } from "../../GameObject";
+import type { LockType } from "../../LockType";
 import { Container } from "./Container";
 
 export class Drawer extends Container {
-  constructor(children?: GameObject[], locked?: LockType) {
-    super("tiroir", children ?? [], locked ?? null);
+  constructor(children?: GameObject[], lock?: LockType) {
+    super("tiroir", children ?? [], lock);
     this.determiner = "le";
   }
 

@@ -1,10 +1,12 @@
 import type Game from "../Game";
-import { Item } from "../objects/items/Item";
+import { Container } from "../objects/openable/containers/Container";
+import { Door } from "../objects/openable/doors/Door";
+import Openable from "../objects/openable/Openable";
 import type Command from "./Command";
 
-export default class TakeCommand implements Command {
+export default class OpenCommand implements Command {
   matches(input: string): boolean {
-    return this.isTakeCommand(input);
+    return this.isOpenCommand(input);
   }
 
   execute(game: Game, input: string) {
@@ -14,7 +16,7 @@ export default class TakeCommand implements Command {
     const nearby = game.map.getObjectsAround(character);
 
     if (nearby.length === 0) {
-      game.display.log("Je ne vois rien à prendre ici.", character);
+      game.display.log("Je ne peux rien ouvrir d'ici.", character);
       return;
     }
 
@@ -26,7 +28,7 @@ export default class TakeCommand implements Command {
       );
       if (!chosen) {
         game.display.log(
-          `Je ne vois pas de "${itemName}" à prendre.`,
+          `Je ne vois pas de "${itemName}" à ouvrir.`,
           character
         );
         return;
@@ -34,23 +36,25 @@ export default class TakeCommand implements Command {
     } else {
       if (nearby.length > 1) {
         const list = nearby.map(({ object }) => object.name).join(", ");
-        game.display.log(`Que dois-je prendre ? (${list})`, character);
+        game.display.log(`Que dois-je ouvrir ? (${list})`, character);
         return;
       }
       chosen = nearby[0];
     }
 
-    if (chosen.object instanceof Item) {
-      const item = chosen.object;
+    if (chosen.object instanceof Openable) {
+      const objectToOpen = chosen.object;
 
-      character.inventory.push(item);
+      if (objectToOpen.isLocked()) {
+        game.display.log(`C'est verrouillé.`, character);
+        return;
+      }
 
-      game.map.removeObject(chosen.position);
-      game.display.log(
-        `${character.name} a pris ${chosen.object.determiner} ${chosen.object.name}.`
-      );
-    } else {
-      game.display.log(`Je ne peux pas prendre ça.`, character);
+      if (objectToOpen instanceof Container) {
+        objectToOpen.displayContent();
+      } else if (objectToOpen instanceof Door) {
+        game.changeRoom();
+      }
     }
   }
 
@@ -62,8 +66,8 @@ export default class TakeCommand implements Command {
     return null;
   }
 
-  private isTakeCommand(input: string): boolean {
-    const keywords = ["prends", "attrape", "chope", "ramasse"];
+  private isOpenCommand(input: string): boolean {
+    const keywords = ["ouvre"];
     return keywords.some((word) => input.toLowerCase().includes(word));
   }
 }
