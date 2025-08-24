@@ -20,6 +20,10 @@ export default class Inventory {
     }
   }
 
+  size(): number {
+    return this.items.length;
+  }
+
   public get items(): Item[] {
     return this._items;
   }

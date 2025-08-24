@@ -24,6 +24,9 @@ export default class Character {
   }
 
   displayInventory(): string {
+    if (this.inventory.size() === 0) {
+      return "Je n'ai rien sur moi.";
+    }
     return `J'ai en ma possession :  ${this.inventory.items
       .map((i) => `${i.genre === "masculine" ? "un" : "une"} ${i.name}`)
       .join(", ")}.`;
