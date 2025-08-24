@@ -1,13 +1,19 @@
-import { GameObject } from "../../GameObject";
-import type { LockType } from "../../LockType";
-import Openable from "../Openable";
+import { GameObject } from "./GameObject";
+import type { LockType } from "./LockType";
+import Openable from "./Openable";
 
-export abstract class Container extends Openable {
+export abstract class OpenableContainer extends Openable {
   protected _isContainer: boolean;
   protected _children: GameObject[];
+  protected _isOpen: boolean = false;
 
-  constructor(name: string, children?: GameObject[], lock?: LockType) {
-    super(name, lock);
+  constructor(
+    name: string,
+    children?: GameObject[],
+    lock?: LockType,
+    hidden?: boolean
+  ) {
+    super(name, lock, hidden);
     this._isContainer = true;
     this._children = children ?? [];
   }
@@ -30,12 +36,21 @@ export abstract class Container extends Openable {
       .join(", ")}.`;
   }
 
-  unlock(): string {
-    if (this.lock) {
-      return `${this.name} a été déverrouillé(e).`;
-    } else {
-      return `${this.name} est déjà ouvert(e).`;
+  revealChildren() {
+    for (const child of this.children) {
+      if (!this.lock) {
+        child.hidden = false;
+      }
     }
+  }
+
+  open(): void {
+    this.revealChildren();
+    this.isOpen = true;
+  }
+
+  close(): void {
+    this.isOpen = false;
   }
 
   public get children(): GameObject[] {
@@ -43,5 +58,12 @@ export abstract class Container extends Openable {
   }
   public set children(value: GameObject[]) {
     this._children = value;
+  }
+
+  public get isOpen(): boolean {
+    return this._isOpen;
+  }
+  public set isOpen(value: boolean) {
+    this._isOpen = value;
   }
 }

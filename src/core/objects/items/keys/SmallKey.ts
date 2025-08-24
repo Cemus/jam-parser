@@ -3,6 +3,8 @@ import { Key } from "./Key";
 export class SmallKey extends Key {
   constructor(hidden?: boolean) {
     super("petite clef", hidden);
+    this.consumable = true;
+    this.unlocks = ["smallKey"];
   }
 
   examine(): string {

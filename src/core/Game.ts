@@ -11,6 +11,8 @@ import MoveCommand from "./commands/MoveCommand";
 import ObserveCommand from "./commands/ObserveCommand";
 import TakeCommand from "./commands/TakeCommand";
 import OpenCommand from "./commands/OpenCommand";
+import UseCommand from "./commands/UseCommand";
+import { ColoredKey } from "./objects/items/keys/ColoredKey";
 
 export default class Game {
   private _characters: Character[];
@@ -23,6 +25,7 @@ export default class Game {
     new MoveCommand(),
     new ObserveCommand(),
     new TakeCommand(),
+    new UseCommand(),
   ];
   private _map: Map;
 
@@ -42,6 +45,10 @@ export default class Game {
   }
 
   init() {
+    //TEMP
+    this.characters[0].inventory.push(new ColoredKey("rouge"));
+    this.characters[0].position = { x: 1, y: 2 };
+    //
     this.parser.init();
     this.display.init().updateCurrentCharacter(this.currentCharacter);
     this.map.updateCurrentCharacter(this.currentCharacter).renderRoom();

@@ -2,9 +2,10 @@ import { ActionType } from "../../characters/ActionType";
 import type Character from "../../characters/Character";
 import type Game from "../../Game";
 import type { GameObject } from "../../objects/GameObject";
-import { Container } from "../../objects/openable/containers/Container";
+import { Container } from "../../objects/containers/Container";
 import AStar, { type Point } from "./aStar";
 import type { Room } from "./Room";
+import { OpenableContainer } from "../../objects/OpenableContainer";
 
 export default class Map {
   private _room: Room;
@@ -46,7 +47,6 @@ export default class Map {
           cellEl.textContent = character.name;
           cellEl.title = character.name;
         } else {
-          console.log(c.object);
           if (c.object?.hidden) {
             console.log(c.object?.hidden);
             cellEl.className = "cell floor";
@@ -145,17 +145,48 @@ export default class Map {
         ) {
           if (cell.object && !cell.object.hidden) {
             found.push({ object: cell.object, position: { x, y } });
-            if (cell.object instanceof Container) {
-              cell.object.children.forEach((child) => {
-                found.push({ object: child, position: { x, y } });
-              });
+
+            if (
+              cell.object instanceof Container ||
+              cell.object instanceof OpenableContainer
+            ) {
+              this.traverseObject(cell.object, found, { x, y });
             }
           }
         }
       });
     });
-
     return found;
+  }
+
+  traverseObject(
+    object: GameObject,
+    array: { object: GameObject; position: Point }[],
+    currentPosition: Point
+  ) {
+    if (
+      !(object instanceof Container) &&
+      !(object instanceof OpenableContainer)
+    ) {
+      return;
+    }
+
+    if (object.children.length === 0) {
+      return;
+    }
+
+    if (object instanceof OpenableContainer) {
+      if (object.isLocked() || !object.isOpen) {
+        return;
+      }
+    }
+
+    for (const child of object.children) {
+      if (child.hidden === false) {
+        array.push({ object: child, position: currentPosition });
+        this.traverseObject(child, array, currentPosition);
+      }
+    }
   }
 
   removeObject(cellPosition: Point) {

@@ -7,6 +7,7 @@ export class ColoredKey extends Key {
   constructor(color: KeyColor, hidden?: boolean) {
     super(`clef ${color}`, hidden);
     this.color = color;
+    this.unlocks = [this.color];
   }
 
   examine(): string {

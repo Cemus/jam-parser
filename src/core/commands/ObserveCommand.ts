@@ -44,7 +44,9 @@ export default class ObserveCommand extends Command {
       return;
     }
 
-    const description = chosen.object.examine();
+    const object = chosen.object;
+
+    const description = object.examine();
     game.display.log(description, character);
   }
 }

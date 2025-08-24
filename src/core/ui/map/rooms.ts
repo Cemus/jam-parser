@@ -1,6 +1,6 @@
-import { Desk } from "../../objects/openable/containers/Desk";
-import { Drawer } from "../../objects/openable/containers/Drawer";
-import { Door } from "../../objects/openable/doors/Door";
+import { Desk } from "../../objects/containers/Desk";
+import { Drawer } from "../../objects/containers/Drawer";
+import { Door } from "../../objects/doors/Door";
 import { ColoredKey } from "../../objects/items/keys/ColoredKey";
 import { SmallKey } from "../../objects/items/keys/SmallKey";
 import type { Room } from "./Room";
@@ -15,7 +15,7 @@ export const rooms: Room[] = [
         name: "Porte D",
         type: "door",
         walkable: false,
-        object: new Door("Porte D", "magenta"),
+        object: new Door("porte D", "magenta"),
       },
       { name: "Vide", type: "empty", walkable: false },
       { name: "Vide", type: "empty", walkable: false },
@@ -33,7 +33,9 @@ export const rooms: Room[] = [
         name: "Bureau",
         type: "object",
         walkable: false,
-        object: new Desk([new Drawer([new ColoredKey("rouge")])]),
+        object: new Desk([
+          new Drawer([new ColoredKey("rouge")], "smallKey", true),
+        ]),
       },
       { name: "Vide", type: "empty", walkable: false },
     ],
@@ -42,7 +44,7 @@ export const rooms: Room[] = [
         name: "Porte B",
         type: "door",
         walkable: false,
-        object: new Door("Porte A", "rouge"),
+        object: new Door("porte A", "rouge"),
       },
       { name: "Sol", type: "floor", walkable: true },
       { name: "Sol", type: "floor", walkable: true },
@@ -51,7 +53,7 @@ export const rooms: Room[] = [
         name: "Porte C",
         type: "door",
         walkable: false,
-        object: new Door("Porte C"),
+        object: new Door("porte C"),
       },
     ],
     [
@@ -68,7 +70,7 @@ export const rooms: Room[] = [
         name: "Porte a",
         type: "door",
         walkable: false,
-        object: new Door("Porte A", "bleue"),
+        object: new Door("porte A", "bleue"),
       },
       { name: "Vide", type: "empty", walkable: false },
       { name: "Vide", type: "empty", walkable: false },
@@ -92,7 +94,7 @@ export const rooms: Room[] = [
         name: "Porte B",
         type: "door",
         walkable: false,
-        object: new Door("Porte B", "verte"),
+        object: new Door("porte B", "verte"),
       },
     ],
     [

@@ -1,7 +1,8 @@
 import type Game from "../Game";
-import { Container } from "../objects/openable/containers/Container";
-import { Door } from "../objects/openable/doors/Door";
-import Openable from "../objects/openable/Openable";
+import { Door } from "../objects/doors/Door";
+import Openable from "../objects/Openable";
+import { OpenableContainer } from "../objects/OpenableContainer";
+
 import Command from "./Command";
 
 export default class OpenCommand extends Command {
@@ -40,20 +41,33 @@ export default class OpenCommand extends Command {
       chosen = nearby[0];
     }
 
-    if (chosen.object instanceof Openable) {
-      const objectToOpen = chosen.object;
-      if (objectToOpen.isLocked()) {
-        game.display.log(`C'est verrouillé.`, character);
-        return;
-      }
+    if (
+      !(chosen.object instanceof Openable) &&
+      !(chosen.object instanceof OpenableContainer)
+    ) {
+      game.display.log(
+        `${chosen.object.genre === "masculine" ? "Le" : "La"} ${
+          chosen.object.name
+        } ne s'ouvre pas.`,
+        character
+      );
+      return;
+    }
 
-      if (objectToOpen instanceof Container) {
-        game.display.log(`${objectToOpen.displayContent()}`, character);
-        return;
-      } else if (objectToOpen instanceof Door) {
-        game.changeRoom();
-        return;
-      }
+    const objectToOpen = chosen.object;
+    if (objectToOpen.isLocked()) {
+      game.display.log(`C'est verrouillé.`, character);
+      return;
+    }
+
+    if (objectToOpen instanceof OpenableContainer) {
+      console.log("s'apprête à ou vri");
+      objectToOpen.open();
+      game.display.log(`${objectToOpen.displayContent()}`, character);
+      return;
+    } else if (objectToOpen instanceof Door) {
+      game.changeRoom();
+      return;
     }
   }
 
