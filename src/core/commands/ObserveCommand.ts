@@ -1,12 +1,10 @@
 import { ActionType } from "../characters/ActionType";
 import type Character from "../characters/Character";
 import type Game from "../Game";
-import type Command from "./Command";
+import Command from "./Command";
 
-export default class ObserveCommand implements Command {
-  matches(input: string): boolean {
-    return this.isObserveCommand(input);
-  }
+export default class ObserveCommand extends Command {
+  keywords: string[] = ["regarde", "observe", "inspecte", "examine"];
 
   execute(game: Game, input: string) {
     const character = game.currentCharacter;
@@ -48,18 +46,5 @@ export default class ObserveCommand implements Command {
 
     const description = chosen.object.examine();
     game.display.log(description, character);
-  }
-
-  private parseTarget(input: string): string | null {
-    const words = input.toLowerCase().split(" ");
-    if (words.length > 1) {
-      return words.slice(1).join(" ");
-    }
-    return null;
-  }
-
-  private isObserveCommand(input: string): boolean {
-    const keywords = ["regarde", "observe", "inspecte", "examine"];
-    return keywords.some((word) => input.toLowerCase().startsWith(word));
   }
 }

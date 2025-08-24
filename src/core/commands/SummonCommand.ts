@@ -1,9 +1,11 @@
 import { ActionType } from "../characters/ActionType";
 import type Game from "../Game";
-import type Command from "./Command";
+import Command from "./Command";
 
-export default class SummonCommand implements Command {
-  matches(input: string, game: Game): boolean {
+export default class SummonCommand extends Command {
+  keywords: string[] = [];
+
+  override matches(input: string, game: Game): boolean {
     const lowerInput = input.toLowerCase();
 
     return game.characters.some((c) =>

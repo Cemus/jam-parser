@@ -2,8 +2,8 @@ import type Game from "../Game";
 import { Item } from "../objects/items/Item";
 import Command from "./Command";
 
-export default class TakeCommand extends Command {
-  keywords: string[] = ["prends", "attrape", "chope", "ramasse"];
+export default class UseCommand extends Command {
+  keywords: string[] = ["utilise", "sers-toi de", "sers toi de"];
 
   execute(game: Game, input: string) {
     const character = game.currentCharacter;
@@ -12,7 +12,7 @@ export default class TakeCommand extends Command {
     const nearby = game.map.getObjectsAround(character);
 
     if (nearby.length === 0) {
-      game.display.log("Je ne vois rien à prendre ici.", character);
+      game.display.log(`Je ne peux pas utiliser ${itemName}.`, character);
       return;
     }
 

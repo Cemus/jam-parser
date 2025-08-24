@@ -2,12 +2,10 @@ import type Game from "../Game";
 import { Container } from "../objects/openable/containers/Container";
 import { Door } from "../objects/openable/doors/Door";
 import Openable from "../objects/openable/Openable";
-import type Command from "./Command";
+import Command from "./Command";
 
-export default class OpenCommand implements Command {
-  matches(input: string): boolean {
-    return this.isOpenCommand(input);
-  }
+export default class OpenCommand extends Command {
+  keywords: string[] = ["ouvre"];
 
   execute(game: Game, input: string) {
     const character = game.currentCharacter;
@@ -65,10 +63,5 @@ export default class OpenCommand implements Command {
       return words.slice(1).join(" ");
     }
     return null;
-  }
-
-  private isOpenCommand(input: string): boolean {
-    const keywords = ["ouvre"];
-    return keywords.some((word) => input.toLowerCase().includes(word));
   }
 }

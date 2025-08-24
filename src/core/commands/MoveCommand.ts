@@ -3,12 +3,25 @@ import type Character from "../characters/Character";
 import type Game from "../Game";
 import type { Point } from "../ui/map/aStar";
 import type { Room } from "../ui/map/Room";
-import type Command from "./Command";
+import Command from "./Command";
 
-export default class MoveCommand implements Command {
-  matches(input: string): boolean {
-    return this.isMovementCommand(input);
-  }
+export default class MoveCommand extends Command {
+  keywords: string[] = [
+    "avance",
+    "haut",
+    "nord",
+    "recule",
+    "sud",
+    "bas",
+    "droite",
+    "l'est",
+    "gauche",
+    "l'ouest",
+    "va vers",
+    "va à",
+    "va au",
+    "va en",
+  ];
 
   execute(game: Game) {
     const lowerInput = game.parser.input.value.toLowerCase();
@@ -33,26 +46,6 @@ export default class MoveCommand implements Command {
     } else {
       game.display.log(character.reactTo(ActionType.UNKNOWN), character);
     }
-  }
-
-  private isMovementCommand(input: string): boolean {
-    const keywords = [
-      "avance",
-      "haut",
-      "nord",
-      "recule",
-      "sud",
-      "bas",
-      "droite",
-      "l'est",
-      "gauche",
-      "l'ouest",
-      "va vers",
-      "va à",
-      "va au",
-      "va en",
-    ];
-    return keywords.some((word) => input.toLowerCase().includes(word));
   }
 
   private cardinalMovement(input: string, character: Character): Point | null {
