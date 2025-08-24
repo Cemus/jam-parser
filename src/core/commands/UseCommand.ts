@@ -41,7 +41,7 @@ export default class UseCommand extends Command {
     character: Character,
     itemName: string
   ): Item | null {
-    for (const item of character.inventory) {
+    for (const item of character.inventory.items) {
       if (item.name.toLowerCase() === itemName.toLowerCase()) {
         return item;
       }
@@ -99,10 +99,8 @@ export default class UseCommand extends Command {
         );
 
         if (key.consumable) {
-          character.inventory.splice(
-            character.inventory.findIndex((i) => i.name === key.name),
-            1
-          );
+          character.inventory.remove(key);
+
           game.display.log(
             `${character.name} n'a plus ${
               key.genre === "masculine" ? "le" : "la"

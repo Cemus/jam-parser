@@ -13,6 +13,7 @@ import TakeCommand from "./commands/TakeCommand";
 import OpenCommand from "./commands/OpenCommand";
 import UseCommand from "./commands/UseCommand";
 import { ColoredKey } from "./objects/items/keys/ColoredKey";
+import DisplayInventoryCommand from "./commands/DisplayInventoryCommand";
 
 export default class Game {
   private _characters: Character[];
@@ -26,6 +27,7 @@ export default class Game {
     new ObserveCommand(),
     new TakeCommand(),
     new UseCommand(),
+    new DisplayInventoryCommand(),
   ];
   private _map: Map;
 
@@ -46,7 +48,7 @@ export default class Game {
 
   init() {
     //TEMP
-    this.characters[0].inventory.push(new ColoredKey("rouge"));
+    this.characters[0].inventory.add(new ColoredKey("rouge"));
     this.characters[0].position = { x: 1, y: 2 };
     //
     this.parser.init();

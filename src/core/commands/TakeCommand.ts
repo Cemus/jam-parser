@@ -41,7 +41,7 @@ export default class TakeCommand extends Command {
     if (chosen.object instanceof Item) {
       const item = chosen.object;
 
-      character.inventory.push(item);
+      character.inventory.add(item);
 
       game.map.removeObject(chosen.position);
       game.display.log(

@@ -14,14 +14,8 @@ export class Desk extends Container {
   examine(): string {
     this.revealChildren();
 
-    if (this.children.length > 1) {
-      return `Ce bureau contient : ${this._children
-        .map((c) => c.name)
-        .join(", ")}.`;
-    }
-
-    return `Ce bureau contient ${
-      this.children[0].genre === "masculine" ? "un" : "une"
-    } ${this.children[0].name}.`;
+    return `Ce bureau contient : ${this._children
+      .map((c) => `${c.genre === "masculine" ? "un" : "une"} ${c.name}`)
+      .join(", ")}.`;
   }
 }

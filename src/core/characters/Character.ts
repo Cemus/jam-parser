@@ -1,7 +1,7 @@
 import { dialogues } from "../dialogues/dialogues";
-import type { GameObject } from "../objects/GameObject";
 import type { Point } from "../ui/map/aStar";
 import type { ActionType } from "./ActionType";
+import Inventory from "./Inventory";
 import type Stats from "./Stats";
 
 export default class Character {
@@ -9,7 +9,7 @@ export default class Character {
   private _stats: Stats;
   private _avatar: string;
   private _position: Point;
-  private _inventory: GameObject[] = [];
+  private _inventory: Inventory = new Inventory();
 
   constructor(name: string, stats: Stats, avatar: string, position: Point) {
     this._name = name;
@@ -21,6 +21,12 @@ export default class Character {
   reactTo(action: ActionType): string {
     const lines = dialogues[this.name]?.[action] ?? ["…"];
     return lines[Math.floor(Math.random() * lines.length)];
+  }
+
+  displayInventory(): string {
+    return `J'ai en ma possession :  ${this.inventory.items
+      .map((i) => `${i.genre === "masculine" ? "un" : "une"} ${i.name}`)
+      .join(", ")}.`;
   }
 
   public get name(): string {
@@ -51,10 +57,10 @@ export default class Character {
     this._position = value;
   }
 
-  public get inventory(): GameObject[] {
+  public get inventory(): Inventory {
     return this._inventory;
   }
-  public set inventory(value: GameObject[]) {
+  public set inventory(value: Inventory) {
     this._inventory = value;
   }
 }
