@@ -38,9 +38,9 @@ export default class TakeCommand extends Command {
       chosen = nearby[0];
     }
 
-    if (chosen.object instanceof Item) {
-      const item = chosen.object;
+    const item = chosen.object;
 
+    if (item instanceof Item) {
       character.inventory.add(item);
 
       game.map.removeObject(chosen.position);
@@ -50,7 +50,12 @@ export default class TakeCommand extends Command {
         } ${chosen.object.name}.`
       );
     } else {
-      game.display.log(`Je ne peux pas prendre ça.`, character);
+      game.display.log(
+        `Je ne peux pas prendre ${item.genre === "masculine" ? "le" : "la"} ${
+          item.name
+        }.`,
+        character
+      );
     }
   }
 }
