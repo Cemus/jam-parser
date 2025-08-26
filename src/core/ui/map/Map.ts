@@ -37,6 +37,8 @@ export default class Map {
       row.forEach((c, x) => {
         const cellEl = document.createElement("div");
         cellEl.classList.remove("cell-highlight");
+        cellEl.dataset.x = String(x);
+        cellEl.dataset.y = String(y);
 
         const character = this.characters.find(
           (char) => char.position.x === x && char.position.y === y
@@ -48,18 +50,15 @@ export default class Map {
           cellEl.title = character.name;
         } else {
           if (c.object?.hidden) {
-            console.log(c.object?.hidden);
             cellEl.className = "cell floor";
-            cellEl.dataset.name = "floor";
             cellEl.title = "Sol";
             cellEl.textContent = "";
           } else {
             cellEl.className = `cell ${c.type}`;
-            cellEl.dataset.name = c.name;
             if (c.type !== "empty") {
               cellEl.title = c.name;
             }
-            cellEl.textContent = this.getCellContent(c.type);
+            cellEl.textContent = this.setCellContent(c.type);
           }
         }
 
@@ -72,6 +71,12 @@ export default class Map {
 
       this._container.appendChild(rowEl);
     });
+  }
+
+  getCellElement(position: Point): HTMLDivElement | null {
+    return this._container.querySelector(
+      `.cell[data-x="${position.x}"][data-y="${position.y}"]`
+    ) as HTMLDivElement | null;
   }
 
   updateCurrentCharacter(character: Character): this {
@@ -192,11 +197,18 @@ export default class Map {
   removeObject(cellPosition: Point) {
     const { x, y } = cellPosition;
     const cell = this.room[y]?.[x];
+
     if (cell) {
       cell.object = null;
       cell.type = "floor";
+
+      const cellEl = this.getCellElement(cellPosition);
+      if (cellEl) {
+        cellEl.className = "cell floor";
+        cellEl.title = "Sol";
+        cellEl.textContent = "";
+      }
     }
-    this.renderRoom();
   }
 
   revealCell(cellPosition: Point): void {
@@ -206,6 +218,7 @@ export default class Map {
       cell.object.hidden = false;
     }
   }
+
   canMoveCharacter(character: Character, goal: Point): boolean {
     const path = this.aStar.findPath(character.position, goal, this.characters);
     return path.length > 0;
@@ -237,7 +250,7 @@ export default class Map {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  getCellContent(type: string): string {
+  setCellContent(type: string): string {
     switch (type) {
       case "door":
         return "🚪";
